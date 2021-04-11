@@ -83,6 +83,24 @@ class GlCanvas {
 
         this.vertex = defaultVertex;
         this.fragment = defaultFragment;
+
+        if(this.canvas.hasAttribute('vertex-shader')) {
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener('load', () => {
+                this.vertex = oReq.responseText;
+            });
+            oReq.open("GET", this.canvas.getAttribute('vertex-shader'), false);
+            oReq.send();
+        }
+
+        if(this.canvas.hasAttribute('fragment-shader')) {
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener('load', () => {
+                this.fragment = oReq.responseText;
+            });
+            oReq.open("GET", this.canvas.getAttribute('fragment-shader'), false);
+            oReq.send();
+        }
     
         this.gl = this.getGlContext(canvas);
 
